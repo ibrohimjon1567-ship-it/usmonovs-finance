@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Usmonov's — Moliyaviy Boshqaruv</title>
+    <style>
+        :root { --bg: #0f1014; --surface: #181920; --accent: #7c6af7; --text: #f0f0f8; --green: #22c27a; --blue: #4fa8f5; }
+        body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
+        .card { background: var(--surface); padding: 20px; border-radius: 12px; border: 1px solid #2a2a38; text-align: center; }
+        .form-box { background: var(--surface); padding: 20px; border-radius: 12px; display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px; align-items: end; margin-bottom: 20px; }
+        .input-group { display: flex; flex-direction: column; }
+        label { font-size: 12px; color: #888; margin-bottom: 5px; }
+        input { background: #1f1f28; border: 1px solid #34344a; color: white; padding: 12px; border-radius: 8px; outline: none; }
+        button { background: var(--accent); color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 12px; overflow: hidden; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #2a2a38; }
+        .btn-del { background: #f05a5a20; color: #f05a5a; border: 1px solid #f05a5a40; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 style="text-align:center">USMONOV'S — MOLIYAVIY HISOB</h2>
+    
+    <div class="stats">
+        <div class="card"><h3>Jami</h3><p id="total-sum" style="color:var(--accent)">0</p></div>
+        <div class="card"><h3>O'qituvchi (80%)</h3><p id="teacher-sum" style="color:var(--green)">0</p></div>
+        <div class="card"><h3>Sizga (20%)</h3><p id="owner-sum" style="color:var(--blue)">0</p></div>
+    </div>
+
+    <div class="form-box">
+        <div class="input-group"><label>O'quvchi</label><input type="text" id="name" placeholder="Ism..."></div>
+        <div class="input-group"><label>Guruh</label><input type="text" id="group" placeholder="Guruh..."></div>
+        <div class="input-group"><label>Summa</label><input type="number" id="amount" placeholder="So'm..."></div>
+        <button onclick="addPayment()">+ Qo'shish</button>
+    </div>
+
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <input type="text" id="search" placeholder="Qidirish..." oninput="refresh()" style="flex: 1;">
+        <button onclick="exportToExcel()" style="background: #22c27a;">Excelga yuklash</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>O'quvchi</th>
+                <th>Guruh</th>
+                <th>Jami</th>
+                <th>O'qituvchi</th>
+                <th>Sizga</th>
+                <th>Amal</th>
+            </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+    </table>
+</div>
+
+<script>
+    let payments = JSON.parse(localStorage.getItem('usmonovs_data') || '[]');
+
+    function refresh() {
+        const q = document.getElementById('search').value.toLowerCase();
+        let total = 0;
+        let html = '';
+        
+        const filtered = payments.filter(i => i.name.toLowerCase().includes(q) || i.group.toLowerCase().includes(q));
+
+        filtered.forEach((item, index) => {
+            total += item.amount;
+            html += `<tr>
+                <td><b>${item.name}</b></td>
+                <td>${item.group}</td>
+                <td>${item.amount.toLocaleString()}</td>
+                <td style="color:var(--green)">${(item.amount * 0.8).toLocaleString()}</td>
+                <td style="color:var(--blue)">${(item.amount * 0.2).toLocaleString()}</td>
+                <td><button class="btn-del" onclick="remove(${index})">O'chirish</button></td>
+            </tr>`;
+        });
+
+        document.getElementById('table-body').innerHTML = html;
+        document.getElementById('total-sum').innerText = total.toLocaleString();
+        document.getElementById('teacher-sum').innerText = (total * 0.8).toLocaleString();
+        document.getElementById('owner-sum').innerText = (total * 0.2).toLocaleString();
+        localStorage.setItem('usmonovs_data', JSON.stringify(payments));
+    }
+
+    function addPayment() {
+        const name = document.getElementById('name').value;
+        const group = document.getElementById('group').value;
+        const amount = parseInt(document.getElementById('amount').value);
+        if(!name || !amount) return alert("To'ldiring!");
+        payments.unshift({ name, group: group || '—', amount });
+        document.getElementById('name').value = '';
+        document.getElementById('group').value = '';
+        document.getElementById('amount').value = '';
+        refresh();
+    }
+
+    function remove(idx) {
+        if(confirm("O'chirilsinmi?")) { payments.splice(idx, 1); refresh(); }
+    }
+
+    function exportToExcel() {
+        let csv = "O'quvchi,Guruh,Jami,O'qituvchi,Markaz\n";
+        payments.forEach(i => { csv += `${i.name},${i.group},${i.amount},${i.amount*0.8},${i.amount*0.2}\n`; });
+        const a = document.createElement('a');
+        a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+        a.download = 'Hisobot.csv';
+        a.click();
+    }
+
+    refresh();
+</script>
+</body>
+</html>
