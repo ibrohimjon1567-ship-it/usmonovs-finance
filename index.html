@@ -3,173 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usmonov's CRM — Cloud Pro</title>
+    <title>Usmonov's CRM Pro — Tarix va Statistika</title>
     <style>
-        :root {
-            --bg: #0b0c10; --card: #1a1b23; --accent: #7c6af7; --text: #f0f0f8;
-            --green: #22c27a; --red: #f05a5a; --border: #2d2e3d;
-        }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 10px; }
+        :root { --bg: #0b0c10; --card: #1f2833; --accent: #66fcf1; --text: #c5c6c7; --green: #45a29e; --red: #ff4d4d; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; }
         
-        /* Dashboard Stats */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
-        .stat-card { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); border-top: 4px solid var(--accent); }
-        .stat-card h3 { font-size: 12px; color: #888; margin: 0; text-transform: uppercase; }
-        .stat-card p { font-size: 24px; font-weight: bold; margin: 10px 0 0; color: var(--text); }
+        /* Menu Tabs */
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { background: #1a1a1a; color: white; border: 1px solid var(--accent); padding: 10px 20px; border-radius: 5px; cursor: pointer; flex: 1; }
+        .tab-btn.active { background: var(--accent); color: black; font-weight: bold; }
 
-        /* Form Section */
-        .form-section { background: var(--card); padding: 25px; border-radius: 15px; margin-bottom: 25px; border: 1px solid var(--border); display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; align-items: end; }
-        .input-group { display: flex; flex-direction: column; gap: 8px; }
-        label { font-size: 13px; color: #aaa; }
-        input, select { background: #252632; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; outline: none; }
-        input:focus { border-color: var(--accent); }
-        
-        button { background: var(--accent); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        button:hover { opacity: 0.8; transform: translateY(-2px); }
-        button:disabled { background: #444; cursor: not-allowed; }
+        .section { display: none; background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid #45a29e; }
+        .section.active { display: block; }
 
-        /* Table */
-        .table-wrap { overflow-x: auto; background: var(--card); border-radius: 12px; border: 1px solid var(--border); }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th { background: #252632; padding: 15px; text-align: left; font-size: 13px; color: #888; }
-        td { padding: 15px; border-bottom: 1px solid var(--border); font-size: 14px; }
+        /* Stats Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-card { background: #0b0c10; padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent); }
+
+        /* Forms & Tables */
+        input, select { background: #1a1a1a; border: 1px solid #45a29e; color: white; padding: 10px; border-radius: 5px; margin-bottom: 10px; width: 100%; box-sizing: border-box; }
+        button.main-btn { background: var(--accent); color: black; border: none; padding: 12px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; }
         
-        .status { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
-        .status-paid { background: rgba(34, 194, 122, 0.15); color: var(--green); }
-        .status-debt { background: rgba(240, 90, 90, 0.15); color: var(--red); }
-        
-        .loading { display: none; color: var(--accent); font-size: 12px; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #45a29e; }
+        th { color: var(--accent); text-transform: uppercase; }
+        .badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; }
+        .bg-red { background: rgba(255, 77, 77, 0.2); color: var(--red); }
+        .bg-green { background: rgba(102, 252, 241, 0.2); color: var(--accent); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2 style="margin:0;">USMONOV'S <span style="color:var(--accent)">CRM</span></h2>
-        <span id="sync-status" style="font-size: 12px; color: #666;">● Bulutga ulangan</span>
-    </div>
+    <h2>USMONOV'S <span style="color:var(--accent)">PRO CRM</span></h2>
 
     <div class="grid">
-        <div class="stat-card"><h3>Jami Tushum</h3><p id="t-total">0</p></div>
-        <div class="stat-card" style="border-color: var(--green)"><h3>Markaz (20%)</h3><p id="t-owner">0</p></div>
-        <div class="stat-card" style="border-color: var(--red)"><h3>Umumiy Qarz</h3><p id="t-debt">0</p></div>
+        <div class="stat-card"><h5>Jami Tushum</h5><p id="t-total">0</p></div>
+        <div class="stat-card"><h5>O'quvchilar</h5><p id="t-count">0</p></div>
+        <div class="stat-card"><h5>Jami Qarz</h5><p id="t-debt">0</p></div>
     </div>
 
-    <div class="form-section">
-        <div class="input-group"><label>O'quvchi</label><input type="text" id="name" placeholder="Ismi..."></div>
-        <div class="input-group"><label>Kurs Narxi</label><input type="number" id="price" placeholder="500,000"></div>
-        <div class="input-group"><label>To'landi</label><input type="number" id="paid" placeholder="300,000"></div>
-        <div class="input-group">
-            <label>Turi</label>
-            <select id="payType">
-                <option value="Naqd">Naqd</option>
-                <option value="Plastik">Plastik</option>
-            </select>
-        </div>
-        <div style="display:flex; flex-direction:column;">
-            <button id="save-btn" onclick="addEntry()">+ Saqlash</button>
-            <span id="loader" class="loading">Yuborilmoqda...</span>
-        </div>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('add')">Kiritish</button>
+        <button class="tab-btn" onclick="showTab('history')">Tarix</button>
+        <button class="tab-btn" onclick="showTab('stats')">Statistika</button>
     </div>
 
-    <div class="table-wrap">
+    <div id="add" class="section active">
+        <h3>Yangi to'lov qo'shish</h3>
+        <input type="text" id="name" placeholder="O'quvchi ismi">
+        <input type="number" id="price" placeholder="Kurs narxi (masalan: 500000)">
+        <input type="number" id="paid" placeholder="To'langan summa">
+        <select id="type"><option value="Naqd">Naqd</option><option value="Plastik">Plastik</option></select>
+        <button class="main-btn" onclick="saveData()">SAQLASH VA BULUTGA YUBORISH</button>
+    </div>
+
+    <div id="history" class="section">
+        <h3>Barcha to'lovlar tarixi</h3>
         <table>
-            <thead>
-                <tr>
-                    <th>O'quvchi</th>
-                    <th>Kurs Narxi</th>
-                    <th>To'landi</th>
-                    <th>Qarz</th>
-                    <th>Holat</th>
-                    <th>Amal</th>
-                </tr>
-            </thead>
-            <tbody id="data-list"></tbody>
+            <thead><tr><th>Sana</th><th>O'quvchi</th><th>Summa</th><th>Tur</th><th>Amal</th></tr></thead>
+            <tbody id="history-list"></tbody>
+        </table>
+    </div>
+
+    <div id="stats" class="section">
+        <h3>O'quvchilar balansi</h3>
+        <table>
+            <thead><tr><th>O'quvchi</th><th>Jami To'lov</th><th>Qarz</th><th>Holat</th></tr></thead>
+            <tbody id="stats-list"></tbody>
         </table>
     </div>
 </div>
 
 <script>
     const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbzUk_s4ay3W5eQzAthBdnAbE36WCa3rUXJN0WLfyrakHxGBBFoKAx-0gPUGqnKVotLsdA/exec";
-    let students = JSON.parse(localStorage.getItem('usmonovs_cloud_v3') || '[]');
+    let data = JSON.parse(localStorage.getItem('usmonovs_v4') || '[]');
 
-    async function addEntry() {
+    function showTab(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        event.target.classList.add('active');
+        render();
+    }
+
+    async function saveData() {
         const name = document.getElementById('name').value;
         const price = parseInt(document.getElementById('price').value) || 0;
         const paid = parseInt(document.getElementById('paid').value) || 0;
-        const type = document.getElementById('payType').value;
-        const btn = document.getElementById('save-btn');
-        const loader = document.getElementById('loader');
+        const type = document.getElementById('type').value;
+        const date = new Date().toLocaleDateString();
 
-        if(!name || price <= 0) return alert("Ma'lumotlarni to'ldiring!");
+        if(!name || price <= 0) return alert("Ma'lumot to'liq emas!");
 
-        const debt = price - paid;
-        const studentData = { name, price, paid, debt, type };
+        const newItem = { date, name, price, paid, debt: price - paid, type };
+        
+        // 1. Bulutga yuborish
+        fetch(GOOGLE_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newItem) });
 
-        // Vizual yuklanish
-        btn.disabled = true;
-        loader.style.display = "block";
-
-        try {
-            // 1. Google Sheets'ga yuborish
-            await fetch(GOOGLE_URL, {
-                method: "POST",
-                mode: "no-cors", // Google Script xavfsizligi uchun
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(studentData)
-            });
-
-            // 2. Mahalliy xotiraga saqlash
-            students.unshift({ ...studentData, status: debt <= 0 ? 'To\'liq' : 'Qarz' });
-            localStorage.setItem('usmonovs_cloud_v3', JSON.stringify(students));
-            
-            // 3. Formani tozalash
-            document.getElementById('name').value = '';
-            document.getElementById('price').value = '';
-            document.getElementById('paid').value = '';
-            
-            render();
-            alert("Muvaffaqiyatli: Ma'lumot jadvalga va bulutga qo'shildi!");
-        } catch (error) {
-            console.error("Xato:", error);
-            alert("Xatolik yuz berdi, lekin ma'lumot telefonda saqlandi.");
-        } finally {
-            btn.disabled = false;
-            loader.style.display = "none";
-        }
+        // 2. Mahalliy saqlash
+        data.unshift(newItem);
+        localStorage.setItem('usmonovs_v4', JSON.stringify(data));
+        
+        alert("Saqlandi!");
+        render();
     }
 
     function render() {
-        let h = '', totalPaid = 0, totalDebt = 0;
-        students.forEach((s, i) => {
-            totalPaid += s.paid;
-            totalDebt += s.debt;
-            h += `<tr>
-                <td><b>${s.name}</b><br><small style="color:#666">${s.type}</small></td>
-                <td>${s.price.toLocaleString()}</td>
-                <td style="color:var(--green)">${s.paid.toLocaleString()}</td>
-                <td style="color:${s.debt > 0 ? 'var(--red)' : 'white'}">${s.debt.toLocaleString()}</td>
-                <td><span class="status ${s.status==='To\'liq' ? 'status-paid' : 'status-debt'}">${s.status}</span></td>
-                <td><button onclick="del(${i})" style="background:none; color:var(--red); border:1px solid #444; padding:5px; border-radius:5px;">O'chirish</button></td>
-            </tr>`;
+        let hList = '', sList = '', totalPaid = 0, totalDebt = 0;
+        let studentsObj = {};
+
+        data.forEach((item, index) => {
+            totalPaid += item.paid;
+            totalDebt += item.debt;
+
+            // Tarix ro'yxati
+            hList += `<tr><td>${item.date}</td><td>${item.name}</td><td style="color:var(--accent)">${item.paid.toLocaleString()}</td><td>${item.type}</td><td><button onclick="del(${index})" style="color:red; background:none; border:none; cursor:pointer;">X</button></td></tr>`;
+
+            // Statistika uchun hisoblash
+            if(!studentsObj[item.name]) {
+                studentsObj[item.name] = { total: 0, debt: 0 };
+            }
+            studentsObj[item.name].total += item.paid;
+            studentsObj[item.name].debt += item.debt;
         });
-        document.getElementById('data-list').innerHTML = h;
+
+        // Statistika ro'yxati
+        for(let name in studentsObj) {
+            let s = studentsObj[name];
+            sList += `<tr><td>${name}</td><td>${s.total.toLocaleString()}</td><td style="color:${s.debt > 0 ? 'var(--red)' : 'var(--accent)'}">${s.debt.toLocaleString()}</td><td><span class="badge ${s.debt > 0 ? 'bg-red' : 'bg-green'}">${s.debt > 0 ? 'Qarz' : 'To\'liq'}</span></td></tr>`;
+        }
+
+        document.getElementById('history-list').innerHTML = hList;
+        document.getElementById('stats-list').innerHTML = sList;
         document.getElementById('t-total').innerText = totalPaid.toLocaleString() + " so'm";
-        document.getElementById('t-owner').innerText = (totalPaid * 0.2).toLocaleString() + " so'm";
+        document.getElementById('t-count').innerText = Object.keys(studentsObj).length + " ta";
         document.getElementById('t-debt').innerText = totalDebt.toLocaleString() + " so'm";
     }
 
-    function del(i) {
-        if(confirm("Ushbu yozuvni o'chirmoqchimisiz? (Eslatma: Google Jadvaldan qo'lda o'chiriladi)")) {
-            students.splice(i, 1);
-            localStorage.setItem('usmonovs_cloud_v3', JSON.stringify(students));
-            render();
-        }
-    }
-
+    function del(i) { if(confirm("O'chirilsinmi?")) { data.splice(i,1); localStorage.setItem('usmonovs_v4', JSON.stringify(data)); render(); } }
     render();
 </script>
-
 </body>
 </html>
