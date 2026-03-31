@@ -3,87 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usmonov's CRM — Luxury Edition</title>
+    <title>Usmonov's CRM Professional</title>
     <style>
-        /* LOGOTIP VA RASMDAGI RANGLARGA 100% MOSLANGAN DIZAYN */
         :root {
-            --bg: #0b111d;           /* To'q fon */
-            --card: #162231;         /* Kartochka foni */
-            
-            /* Rasmdagi Firuza (Turquoise) rang */
-            --accent: #19c3b0;       
-            --accent-hover: #14a393;
-            
-            /* Rasmdagi Oltin rang */
-            --accent-gold: #c5a359;  
-            --accent-gold-light: #dfc17b;
-            
-            --text-main: #f8fafc;    /* Oq matn */
-            --text-muted: #94a3b8;   /* Kulrang matn */
-            --green: #22c55e;        /* To'langan */
-            --red: #ef4444;          /* Qarz */
+            --bg: #0b111d;
+            --card: #162231;
+            --accent: #19c3b0; /* Firuza */
+            --gold: #c5a359;   /* Oltin */
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --red: #ef4444;
+            --green: #22c55e;
             --border: #2d3e50;
         }
 
-        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 15px; }
-        .container { max-width: 900px; margin: 0 auto; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; }
+        .container { max-width: 500px; margin: 0 auto; }
 
-        /* HEADER SECTION */
+        /* HEADER */
         .header { 
             display: flex; align-items: center; justify-content: space-between; 
-            background: var(--card); padding: 15px 20px; border-radius: 15px; 
-            border: 1px solid var(--accent-gold); margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            background: var(--card); padding: 15px; border-radius: 15px; 
+            border: 1px solid var(--gold); margin-bottom: 20px;
         }
-        .logo-area { display: flex; align-items: center; gap: 15px; }
-        .logo-img { 
-            height: 55px; width: 55px; border-radius: 50%; 
-            border: 2px solid var(--accent); object-fit: cover;
-            box-shadow: 0 0 10px var(--accent);
-        }
-        .brand-name { font-size: 20px; font-weight: 800; }
-        .brand-name span { color: var(--accent); }
-        .brand-tag { font-size: 11px; color: var(--accent-gold); display: block; letter-spacing: 2px; }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-img { height: 50px; width: 50px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
+        .brand { font-size: 18px; font-weight: bold; letter-spacing: 1px; }
+        .brand span { color: var(--accent); }
 
-        /* DASHBOARD */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
+        /* DASHBOARD STATS */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
         .stat-card { 
-            background: var(--card); padding: 15px; border-radius: 12px; 
-            border-bottom: 3px solid var(--accent); text-align: center;
+            background: var(--card); padding: 12px; border-radius: 12px; 
+            text-align: center; border-bottom: 3px solid var(--accent);
         }
-        .stat-card.debt-card { border-bottom-color: var(--red); }
-        .stat-card.gold-card { border-bottom-color: var(--accent-gold); }
-        .stat-card h5 { margin: 0; font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
-        .stat-card p { margin: 5px 0 0; font-size: 16px; font-weight: bold; color: var(--text-main); }
+        .stat-card h5 { margin: 0; font-size: 10px; color: var(--muted); text-transform: uppercase; }
+        .stat-card p { margin: 5px 0 0; font-size: 13px; font-weight: bold; }
 
         /* TABS */
-        .tabs { display: flex; gap: 5px; margin-bottom: 20px; background: #080c14; padding: 5px; border-radius: 10px; }
+        .tabs { display: flex; gap: 5px; margin-bottom: 20px; background: #080c14; padding: 5px; border-radius: 12px; }
         .tab-btn { 
             flex: 1; padding: 12px; border: none; background: none; 
-            color: var(--text-muted); cursor: pointer; border-radius: 8px; 
-            font-weight: 600; font-size: 13px; transition: 0.3s;
+            color: var(--muted); cursor: pointer; border-radius: 8px; font-weight: 600;
         }
         .tab-btn.active { background: var(--accent); color: white; }
 
-        .section { display: none; animation: fadeIn 0.3s ease-in; }
-        .section.active { display: block; }
+        .section { display: none; }
+        .section.active { display: block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* FORM */
-        .form-group { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); }
-        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-size: 12px; color: var(--accent-gold); }
-        input, select { 
+        /* FORMS */
+        .card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-size: 11px; color: var(--gold); }
+        input { 
             width: 100%; padding: 12px; background: #0b111d; 
-            border: 1px solid var(--border); border-radius: 8px; 
-            color: white; box-sizing: border-box; outline: none;
+            border: 1px solid var(--border); border-radius: 8px; color: white; box-sizing: border-box;
         }
-        input:focus { border-color: var(--accent); }
-        .main-btn { 
+        input:focus { border-color: var(--accent); outline: none; }
+        .btn { 
             width: 100%; padding: 15px; background: var(--accent); 
-            color: white; border: none; border-radius: 10px; 
-            font-weight: bold; cursor: pointer; transition: 0.3s;
+            color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;
         }
-        .main-btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
 
-        /*
+        /* HISTORY LIST */
+        .history-item { 
+            background: var(--card); padding: 15px; border-radius: 12px; 
+            margin-bottom: 10px; display: flex; justify-content: space-between;
+            border-left: 4px solid var(--accent);
+        }
+        .h-name { font-weight: bold; font-size: 14px; display: block; }
+        .h-date { font-size: 10px; color: var(--muted); }
+        .h-price { text-align: right; }
+        .h-amt { color: var(--accent); font-weight: bold; font-size: 14px; }
+        .h-debt { color: var(--red); font-size: 10px; }
+        .del-btn { color: var(--red); background: none; border: none; cursor: pointer; font-size: 18px; margin-left: 10px; }
+
+        #loader { display: none; text-align: center; color: var(--gold); font-size: 12px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo-area">
+            <img src="logo.jpg" onerror="this.src='https://cdn-icons-png.flaticon.
