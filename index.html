@@ -3,88 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usmonov's CRM Professional</title>
+    <title>Usmonov's CRM</title>
     <style>
         :root {
-            --bg: #0b111d;
-            --card: #162231;
-            --accent: #19c3b0; /* Firuza */
-            --gold: #c5a359;   /* Oltin */
-            --text: #f8fafc;
-            --muted: #94a3b8;
-            --red: #ef4444;
-            --green: #22c55e;
-            --border: #2d3e50;
+            --bg: #0b111d; --card: #162231; --accent: #19c3b0; --gold: #c5a359;
+            --text: #f8fafc; --muted: #94a3b8; --border: #2d3e50;
         }
-
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; }
-        .container { max-width: 500px; margin: 0 auto; }
-
-        /* HEADER */
-        .header { 
-            display: flex; align-items: center; justify-content: space-between; 
-            background: var(--card); padding: 15px; border-radius: 15px; 
-            border: 1px solid var(--gold); margin-bottom: 20px;
-        }
-        .logo-area { display: flex; align-items: center; gap: 12px; }
-        .logo-img { height: 50px; width: 50px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
-        .brand { font-size: 18px; font-weight: bold; letter-spacing: 1px; }
-        .brand span { color: var(--accent); }
-
-        /* DASHBOARD STATS */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-        .stat-card { 
-            background: var(--card); padding: 12px; border-radius: 12px; 
-            text-align: center; border-bottom: 3px solid var(--accent);
-        }
-        .stat-card h5 { margin: 0; font-size: 10px; color: var(--muted); text-transform: uppercase; }
-        .stat-card p { margin: 5px 0 0; font-size: 13px; font-weight: bold; }
-
-        /* TABS */
-        .tabs { display: flex; gap: 5px; margin-bottom: 20px; background: #080c14; padding: 5px; border-radius: 12px; }
-        .tab-btn { 
-            flex: 1; padding: 12px; border: none; background: none; 
-            color: var(--muted); cursor: pointer; border-radius: 8px; font-weight: 600;
-        }
-        .tab-btn.active { background: var(--accent); color: white; }
-
-        .section { display: none; }
-        .section.active { display: block; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* FORMS */
-        .card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); }
-        .input-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-size: 11px; color: var(--gold); }
-        input { 
-            width: 100%; padding: 12px; background: #0b111d; 
-            border: 1px solid var(--border); border-radius: 8px; color: white; box-sizing: border-box;
-        }
-        input:focus { border-color: var(--accent); outline: none; }
-        .btn { 
-            width: 100%; padding: 15px; background: var(--accent); 
-            color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;
-        }
-
-        /* HISTORY LIST */
-        .history-item { 
-            background: var(--card); padding: 15px; border-radius: 12px; 
-            margin-bottom: 10px; display: flex; justify-content: space-between;
-            border-left: 4px solid var(--accent);
-        }
-        .h-name { font-weight: bold; font-size: 14px; display: block; }
-        .h-date { font-size: 10px; color: var(--muted); }
-        .h-price { text-align: right; }
-        .h-amt { color: var(--accent); font-weight: bold; font-size: 14px; }
-        .h-debt { color: var(--red); font-size: 10px; }
-        .del-btn { color: var(--red); background: none; border: none; cursor: pointer; font-size: 18px; margin-left: 10px; }
-
-        #loader { display: none; text-align: center; color: var(--gold); font-size: 12px; margin-top: 10px; }
+        body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; }
+        .header { display: flex; align-items: center; justify-content: space-between; background: var(--card); padding: 12px; border-radius: 12px; border: 1px solid var(--gold); margin-bottom: 15px; }
+        .logo { height: 45px; width: 45px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; background: #222; }
+        .stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+        .box { background: var(--card); padding: 10px; border-radius: 10px; text-align: center; border-bottom: 2px solid var(--accent); }
+        .box h5 { margin: 0; font-size: 10px; color: var(--muted); }
+        .box p { margin: 5px 0 0; font-weight: bold; font-size: 14px; }
+        .form { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
+        input { width: 100%; padding: 12px; margin-bottom: 10px; background: #080c14; border: 1px solid var(--border); border-radius: 8px; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <div class="logo-area">
-            <img src="logo.jpg" onerror="this.src='https://cdn-icons-png.flaticon.
+<div class="header">
+    <div style="display:flex; align-items:center; gap:10px;">
+        <img src="logo.jpg" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3354/3354544.png'" class="logo">
+        <b style="font-size: 14px;">USMONOV'S CRM</b>
+    </div>
+    <div style="color:#22c55e; font-size:10px;">● ONLINE</div>
+</div>
+
+<div class="stats">
+    <div class="box"><h5>Tushum</h5><p id="t-total">0</p></div>
+    <div class="box"><h5>O'quvchi</h5><p id="t-count">0</p></div>
+    <div class="box" style="border-color:#ef4444"><h5>Qarz</h5><p id="t-debt">0</p></div>
+</div>
+
+<div class="form">
+    <input type="text" id="name" placeholder="Ism...">
+    <input type="number" id="price" placeholder="Narxi...">
+    <input type="number" id="paid" placeholder="To'landi...">
+    <button onclick="saveData()" id="btn">SAQLASH</button>
+</div>
+
+<div id="list" style="margin-top:20px;"></div>
+
+<script>
+    // Agar Google URL xato bo'lsa ham dastur o'chib qolmaydi
+    const URL = "https://script.google.com/macros/s/AKfycbzUk_s4ay3W5eQzAthBdnAbE36WCa3rUXJN0WLfyrakHxGBBFoKAx-0gPUGqnKVotLsdA/exec";
+    
+    // Ma'lumotlarni saqlash
+    let localData = JSON.parse(localStorage.getItem('usmon_vfinal') || '[]');
+
+    async function saveData() {
+        const n = document.getElementById('name').value;
+        const pr = parseInt(document.getElementById('price').value) || 0;
+        const pd = parseInt(document.getElementById('paid').value) || 0;
+        
+        if(!n) return alert("Ism kiriting");
+
+        const obj = { name: n, price: pr, paid: pd, debt: pr-pd, date: new Date().toLocaleDateString() };
+        
+        // 1. Darhol ekranga chiqarish (Internet kutmasdan)
+        localData.unshift(obj);
+        localStorage.setItem('usmon_vfinal', JSON.stringify(localData));
+        render();
+
+        // 2. Google'ga yuborish
+        try {
+            await fetch(URL, { method: "POST", mode: "no-cors", body: JSON.stringify(obj) });
+        } catch(e) { console.log("Google sync error"); }
+        
+        document.getElementById('name').value = '';
+        document.getElementById('price').value = '';
+        document.getElementById('paid').value = '';
+    }
+
+    function render() {
+        let tp = 0, td = 0, html = '';
+        localData.forEach(i => {
+            tp += i.paid; td += i.debt;
+            html += `<div style="background:#162231; padding:10px; margin-bottom:5px; border-radius:8px; font-size:12px;">
+                        <b>${i.name}</b> - ${i.paid.toLocaleString()} so'm
+                     </div>`;
+        });
+        document.getElementById('t-total').innerText = tp.toLocaleString();
+        document.getElementById('t-count').innerText = localData.length;
+        document.getElementById('t-debt').innerText = td.toLocaleString();
+        document.getElementById('list').innerHTML = html;
+    }
+
+    // Birinchi marta yuklashda ishga tushirish
+    window.onload = render;
+</script>
+</body>
+</html>
