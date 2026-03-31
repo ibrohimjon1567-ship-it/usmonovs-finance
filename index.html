@@ -3,88 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usmonov's CRM Pro — Tarix va Statistika</title>
+    <title>Usmonov's CRM — Professional System</title>
     <style>
-        :root { --bg: #0b0c10; --card: #1f2833; --accent: #66fcf1; --text: #c5c6c7; --green: #45a29e; --red: #ff4d4d; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
-        .container { max-width: 1100px; margin: 0 auto; }
-        
-        /* Menu Tabs */
-        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tab-btn { background: #1a1a1a; color: white; border: 1px solid var(--accent); padding: 10px 20px; border-radius: 5px; cursor: pointer; flex: 1; }
-        .tab-btn.active { background: var(--accent); color: black; font-weight: bold; }
+        /* LOGOTIP VA RASMGA MOSLANGAN RANG PALITRASI */
+        :root {
+            --bg: #10192a;           /* To'q fon (tungi ko'rinish) */
+            --card: #1e2a3b;         /* Kartochka foni */
+            
+            /* Rasmdagi Firuza (Turquoise) rang */
+            --accent: #19c3b0;       
+            --accent-hover: #15a999;
+            
+            /* Rasmdagi Fon va Masjidlarning Oltin rangi */
+            --accent-gold: #c5a359;  
+            --accent-gold-hover: #b3924f;
+            
+            /* Matn ranglari */
+            --text-main: #f8fafc;    /* Asosiy oq matn */
+            --text-muted: #84a2b8;   /* Kulrang matn */
+            
+            /* Status ranglari */
+            --green: #22c55e;        /* To'langan */
+            --red: #ef4444;          /* Qarz */
+            --border: #334a65;       /* Chegara rangi */
+        }
 
-        .section { display: none; background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid #45a29e; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 20px; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; }
+
+        /* HEADER & LOGO AREA (Rasmdagi masjid ikonkalari bilan) */
+        .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; background: var(--card); padding: 15px 25px; border-radius: 15px; border: 1px solid var(--accent-gold); }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-img { height: 50px; width: auto; border-radius: 10px; border: 2px solid var(--accent); }
+        .brand-name { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; display: flex; align-items: center; gap: 5px; }
+        .brand-name span { color: var(--accent); }
+        .brand-name-gold { color: var(--accent-gold); font-size: 16px; margin-left: 10px; }
+
+        /* DASHBOARD CARDS (Masjid va Oy ikonkalari bilan) */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .stat-card { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); position: relative; overflow: hidden; display: flex; align-items: center; gap: 10px;}
+        .stat-card::after { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 4px; background: var(--accent); }
+        .stat-card-gold::after { background: var(--accent-gold); }
+        .stat-card h5 { margin: 0; font-size: 12px; color: var(--text-muted); text-transform: uppercase; }
+        .stat-card p { margin: 8px 0 0; font-size: 24px; font-weight: bold; }
+        .stat-icon { font-size: 20px; color: var(--accent); }
+        .stat-icon-gold { color: var(--accent-gold); }
+
+        /* TABS */
+        .tabs { display: flex; background: #111a27; padding: 5px; border-radius: 10px; margin-bottom: 25px; gap: 5px; }
+        .tab-btn { flex: 1; padding: 12px; border: none; background: none; color: var(--text-muted); cursor: pointer; border-radius: 8px; font-weight: 600; transition: 0.3s; font-size: 14px;}
+        .tab-btn.active { background: var(--accent); color: white; box-shadow: 0 4px 12px rgba(25, 195, 176, 0.3); }
+
+        .section { display: none; animation: fadeIn 0.4s ease; }
         .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Stats Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .stat-card { background: #0b0c10; padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent); }
+        /* FORMS */
+        .form-group { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid var(--accent-gold); }
+        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        label { display: block; margin-bottom: 8px; font-size: 13px; color: var(--text-muted); }
+        input, select { width: 100%; padding: 12px; background: #0f192a; border: 1px solid var(--border); border-radius: 8px; color: white; box-sizing: border-box; }
+        input:focus { border-color: var(--accent); outline: none; }
+        .main-btn { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+        .main-btn:hover { background: var(--accent-hover); }
 
-        /* Forms & Tables */
-        input, select { background: #1a1a1a; border: 1px solid #45a29e; color: white; padding: 10px; border-radius: 5px; margin-bottom: 10px; width: 100%; box-sizing: border-box; }
-        button.main-btn { background: var(--accent); color: black; border: none; padding: 12px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        /* TABLES */
+        .table-container { background: var(--card); border-radius: 15px; border: 1px solid var(--accent-gold); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { background: rgba(255,255,255,0.03); padding: 15px; text-align: left; font-size: 12px; color: var(--text-muted); }
+        td { padding: 15px; border-bottom: 1px solid var(--border); font-size: 14px; }
+        .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; }
+        .bg-red { background: rgba(239, 68, 68, 0.1); color: var(--red); }
+        .bg-green { background: rgba(34, 197, 94, 0.1); color: var(--green); }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #45a29e; }
-        th { color: var(--accent); text-transform: uppercase; }
-        .badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; }
-        .bg-red { background: rgba(255, 77, 77, 0.2); color: var(--red); }
-        .bg-green { background: rgba(102, 252, 241, 0.2); color: var(--accent); }
+        .loading-overlay { display: none; text-align: center; color: var(--accent); font-size: 14px; margin-top: 10px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>USMONOV'S <span style="color:var(--accent)">PRO CRM</span></h2>
+    <div class="header">
+        <div class="logo-area">
+            <img src="logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3141/3141158.png'" class="logo-img">
+            <div class="brand-name">
+                <span style="color:var(--text-main);">Usmonov's</span>
+                <span>CRM</span>
+                <span class="brand-name-gold">🕌 Professional System</span>
+            </div>
+        </div>
+        <div id="sync-status" style="font-size: 12px; color: var(--green);">● Online</div>
+    </div>
 
     <div class="grid">
-        <div class="stat-card"><h5>Jami Tushum</h5><p id="t-total">0</p></div>
-        <div class="stat-card"><h5>O'quvchilar</h5><p id="t-count">0</p></div>
-        <div class="stat-card"><h5>Jami Qarz</h5><p id="t-debt">0</p></div>
+        <div class="stat-card"><span class="stat-icon stat-icon-gold">🌙</span><div><h5>Jami Tushum</h5><p id="t-total">0</p></div></div>
+        <div class="stat-card"><span class="stat-icon">👤</span><div><h5>O'quvchilar</h5><p id="t-count">0</p></div></div>
+        <div class="stat-card stat-card-gold" style="--accent: var(--red)"><span class="stat-icon stat-icon-gold">🕌</span><div><h5>Umumiy Qarz</h5><p id="t-debt">0</p></div></div>
     </div>
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="showTab('add')">Kiritish</button>
-        <button class="tab-btn" onclick="showTab('history')">Tarix</button>
-        <button class="tab-btn" onclick="showTab('stats')">Statistika</button>
+        <button class="tab-btn active" onclick="showTab(event, 'add')">TO'LOV QABUL QILISH</button>
+        <button class="tab-btn" onclick="showTab(event, 'history')">TO'LOVLAR TARIXI</button>
+        <button class="tab-btn" onclick="showTab(event, 'stats')">STATISTIKA</button>
     </div>
 
     <div id="add" class="section active">
-        <h3>Yangi to'lov qo'shish</h3>
-        <input type="text" id="name" placeholder="O'quvchi ismi">
-        <input type="number" id="price" placeholder="Kurs narxi (masalan: 500000)">
-        <input type="number" id="paid" placeholder="To'langan summa">
-        <select id="type"><option value="Naqd">Naqd</option><option value="Plastik">Plastik</option></select>
-        <button class="main-btn" onclick="saveData()">SAQLASH VA BULUTGA YUBORISH</button>
+        <div class="form-group">
+            <div class="input-row">
+                <div><label>O'quvchi ismi</label><input type="text" id="name" placeholder="Ism familiya..."></div>
+                <div><label>To'lov turi</label>
+                    <select id="type"><option value="Naqd">Naqd pul</option><option value="Plastik">Plastik karta</option></select>
+                </div>
+            </div>
+            <div class="input-row">
+                <div><label>Kurs narxi (so'm)</label><input type="number" id="price" placeholder="500000"></div>
+                <div><label>To'langan summa (so'm)</label><input type="number" id="paid" placeholder="300000"></div>
+            </div>
+            <button class="main-btn" id="save-btn" onclick="saveData()">TASDIQLASH VA SAQLASH</button>
+            <div id="loader" class="loading-overlay">Bulutga yuborilmoqda, kuting...</div>
+        </div>
     </div>
 
     <div id="history" class="section">
-        <h3>Barcha to'lovlar tarixi</h3>
-        <table>
-            <thead><tr><th>Sana</th><th>O'quvchi</th><th>Summa</th><th>Tur</th><th>Amal</th></tr></thead>
-            <tbody id="history-list"></tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead><tr><th>Sana</th><th>O'quvchi</th><th>Summa</th><th>Tur</th><th>Amal</th></tr></thead>
+                <tbody id="history-list"></tbody>
+            </table>
+        </div>
     </div>
 
     <div id="stats" class="section">
-        <h3>O'quvchilar balansi</h3>
-        <table>
-            <thead><tr><th>O'quvchi</th><th>Jami To'lov</th><th>Qarz</th><th>Holat</th></tr></thead>
-            <tbody id="stats-list"></tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead><tr><th>O'quvchi</th><th>Jami To'lov</th><th>Qolgan Qarz</th><th>Holat</th></tr></thead>
+                <tbody id="stats-list"></tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 <script>
+    // GOOGLE CLOUD URL
     const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbzUk_s4ay3W5eQzAthBdnAbE36WCa3rUXJN0WLfyrakHxGBBFoKAx-0gPUGqnKVotLsdA/exec";
-    let data = JSON.parse(localStorage.getItem('usmonovs_v4') || '[]');
+    
+    // MA'LUMOTLARNI YUKLASH
+    let data = JSON.parse(localStorage.getItem('usmonovs_vpro_data_islamic') || '[]');
 
-    function showTab(id) {
+    function showTab(e, id) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        event.target.classList.add('active');
+        e.currentTarget.classList.add('active');
         render();
     }
 
@@ -93,56 +162,74 @@
         const price = parseInt(document.getElementById('price').value) || 0;
         const paid = parseInt(document.getElementById('paid').value) || 0;
         const type = document.getElementById('type').value;
-        const date = new Date().toLocaleDateString();
+        const date = new Date().toLocaleDateString('uz-UZ');
+        const btn = document.getElementById('save-btn');
+        const loader = document.getElementById('loader');
 
-        if(!name || price <= 0) return alert("Ma'lumot to'liq emas!");
+        if(!name || price <= 0) return alert("Iltimos, ma'lumotlarni to'liq kiriting!");
 
         const newItem = { date, name, price, paid, debt: price - paid, type };
         
-        // 1. Bulutga yuborish
-        fetch(GOOGLE_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newItem) });
+        btn.disabled = true;
+        loader.style.display = "block";
 
-        // 2. Mahalliy saqlash
-        data.unshift(newItem);
-        localStorage.setItem('usmonovs_v4', JSON.stringify(data));
-        
-        alert("Saqlandi!");
-        render();
+        try {
+            // 1. Google Sheetsga yuborish
+            await fetch(GOOGLE_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newItem) });
+            
+            // 2. Local xotiraga saqlash
+            data.unshift(newItem);
+            localStorage.setItem('usmonovs_vpro_data_islamic', JSON.stringify(data));
+            
+            // Tozalash
+            document.getElementById('name').value = '';
+            document.getElementById('price').value = '';
+            document.getElementById('paid').value = '';
+            
+            alert("Muvaffaqiyatli saqlandi!");
+            render();
+        } catch (err) {
+            alert("Xatolik! Internetni tekshiring.");
+        } finally {
+            btn.disabled = false;
+            loader.style.display = "none";
+        }
     }
 
     function render() {
-        let hList = '', sList = '', totalPaid = 0, totalDebt = 0;
-        let studentsObj = {};
+        let hList = '', sList = '', tPaid = 0, tDebt = 0;
+        let stObj = {};
 
-        data.forEach((item, index) => {
-            totalPaid += item.paid;
-            totalDebt += item.debt;
+        data.forEach((item, i) => {
+            tPaid += item.paid;
+            tDebt += item.debt;
+            hList += `<tr><td>${item.date}</td><td><b>${item.name}</b></td><td style="color:var(--accent)">${item.paid.toLocaleString()}</td><td><small>${item.type}</small></td><td><button onclick="del(${i})" style="color:var(--red); background:none; border:none; cursor:pointer;">O'chirish</button></td></tr>`;
 
-            // Tarix ro'yxati
-            hList += `<tr><td>${item.date}</td><td>${item.name}</td><td style="color:var(--accent)">${item.paid.toLocaleString()}</td><td>${item.type}</td><td><button onclick="del(${index})" style="color:red; background:none; border:none; cursor:pointer;">X</button></td></tr>`;
-
-            // Statistika uchun hisoblash
-            if(!studentsObj[item.name]) {
-                studentsObj[item.name] = { total: 0, debt: 0 };
-            }
-            studentsObj[item.name].total += item.paid;
-            studentsObj[item.name].debt += item.debt;
+            if(!stObj[item.name]) stObj[item.name] = { paid: 0, debt: 0 };
+            stObj[item.name].paid += item.paid;
+            stObj[item.name].debt += item.debt;
         });
 
-        // Statistika ro'yxati
-        for(let name in studentsObj) {
-            let s = studentsObj[name];
-            sList += `<tr><td>${name}</td><td>${s.total.toLocaleString()}</td><td style="color:${s.debt > 0 ? 'var(--red)' : 'var(--accent)'}">${s.debt.toLocaleString()}</td><td><span class="badge ${s.debt > 0 ? 'bg-red' : 'bg-green'}">${s.debt > 0 ? 'Qarz' : 'To\'liq'}</span></td></tr>`;
+        for(let n in stObj) {
+            let s = stObj[n];
+            sList += `<tr><td><b>${n}</b></td><td>${s.paid.toLocaleString()}</td><td style="color:${s.debt > 0 ? 'var(--red)' : 'var(--accent)'}">${s.debt.toLocaleString()}</td><td><span class="badge ${s.debt > 0 ? 'bg-red' : 'bg-green'}">${s.debt > 0 ? 'Qarz bor' : 'To\'liq'}</span></td></tr>`;
         }
 
         document.getElementById('history-list').innerHTML = hList;
         document.getElementById('stats-list').innerHTML = sList;
-        document.getElementById('t-total').innerText = totalPaid.toLocaleString() + " so'm";
-        document.getElementById('t-count').innerText = Object.keys(studentsObj).length + " ta";
-        document.getElementById('t-debt').innerText = totalDebt.toLocaleString() + " so'm";
+        document.getElementById('t-total').innerText = tPaid.toLocaleString() + " so'm";
+        document.getElementById('t-count').innerText = Object.keys(stObj).length + " ta";
+        document.getElementById('t-debt').innerText = tDebt.toLocaleString() + " so'm";
     }
 
-    function del(i) { if(confirm("O'chirilsinmi?")) { data.splice(i,1); localStorage.setItem('usmonovs_v4', JSON.stringify(data)); render(); } }
+    function del(i) {
+        if(confirm("Ushbu to'lovni o'chirmoqchimisiz?")) {
+            data.splice(i, 1);
+            localStorage.setItem('usmonovs_vpro_data_islamic', JSON.stringify(data));
+            render();
+        }
+    }
+
     render();
 </script>
 </body>
