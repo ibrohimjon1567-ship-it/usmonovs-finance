@@ -3,234 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usmonov's CRM — Professional System</title>
+    <title>Usmonov's CRM — Luxury Edition</title>
     <style>
-        /* LOGOTIP VA RASMGA MOSLANGAN RANG PALITRASI */
+        /* LOGOTIP VA RASMDAGI RANGLARGA 100% MOSLANGAN DIZAYN */
         :root {
-            --bg: #10192a;           /* To'q fon (tungi ko'rinish) */
-            --card: #1e2a3b;         /* Kartochka foni */
+            --bg: #0b111d;           /* To'q fon */
+            --card: #162231;         /* Kartochka foni */
             
             /* Rasmdagi Firuza (Turquoise) rang */
             --accent: #19c3b0;       
-            --accent-hover: #15a999;
+            --accent-hover: #14a393;
             
-            /* Rasmdagi Fon va Masjidlarning Oltin rangi */
+            /* Rasmdagi Oltin rang */
             --accent-gold: #c5a359;  
-            --accent-gold-hover: #b3924f;
+            --accent-gold-light: #dfc17b;
             
-            /* Matn ranglari */
-            --text-main: #f8fafc;    /* Asosiy oq matn */
-            --text-muted: #84a2b8;   /* Kulrang matn */
-            
-            /* Status ranglari */
+            --text-main: #f8fafc;    /* Oq matn */
+            --text-muted: #94a3b8;   /* Kulrang matn */
             --green: #22c55e;        /* To'langan */
             --red: #ef4444;          /* Qarz */
-            --border: #334a65;       /* Chegara rangi */
+            --border: #2d3e50;
         }
 
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 20px; line-height: 1.6; }
-        .container { max-width: 1000px; margin: 0 auto; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 15px; }
+        .container { max-width: 900px; margin: 0 auto; }
 
-        /* HEADER & LOGO AREA (Rasmdagi masjid ikonkalari bilan) */
-        .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; background: var(--card); padding: 15px 25px; border-radius: 15px; border: 1px solid var(--accent-gold); }
+        /* HEADER SECTION */
+        .header { 
+            display: flex; align-items: center; justify-content: space-between; 
+            background: var(--card); padding: 15px 20px; border-radius: 15px; 
+            border: 1px solid var(--accent-gold); margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
         .logo-area { display: flex; align-items: center; gap: 15px; }
-        .logo-img { height: 50px; width: auto; border-radius: 10px; border: 2px solid var(--accent); }
-        .brand-name { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; display: flex; align-items: center; gap: 5px; }
+        .logo-img { 
+            height: 55px; width: 55px; border-radius: 50%; 
+            border: 2px solid var(--accent); object-fit: cover;
+            box-shadow: 0 0 10px var(--accent);
+        }
+        .brand-name { font-size: 20px; font-weight: 800; }
         .brand-name span { color: var(--accent); }
-        .brand-name-gold { color: var(--accent-gold); font-size: 16px; margin-left: 10px; }
+        .brand-tag { font-size: 11px; color: var(--accent-gold); display: block; letter-spacing: 2px; }
 
-        /* DASHBOARD CARDS (Masjid va Oy ikonkalari bilan) */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
-        .stat-card { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); position: relative; overflow: hidden; display: flex; align-items: center; gap: 10px;}
-        .stat-card::after { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 4px; background: var(--accent); }
-        .stat-card-gold::after { background: var(--accent-gold); }
-        .stat-card h5 { margin: 0; font-size: 12px; color: var(--text-muted); text-transform: uppercase; }
-        .stat-card p { margin: 8px 0 0; font-size: 24px; font-weight: bold; }
-        .stat-icon { font-size: 20px; color: var(--accent); }
-        .stat-icon-gold { color: var(--accent-gold); }
+        /* DASHBOARD */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
+        .stat-card { 
+            background: var(--card); padding: 15px; border-radius: 12px; 
+            border-bottom: 3px solid var(--accent); text-align: center;
+        }
+        .stat-card.debt-card { border-bottom-color: var(--red); }
+        .stat-card.gold-card { border-bottom-color: var(--accent-gold); }
+        .stat-card h5 { margin: 0; font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+        .stat-card p { margin: 5px 0 0; font-size: 16px; font-weight: bold; color: var(--text-main); }
 
         /* TABS */
-        .tabs { display: flex; background: #111a27; padding: 5px; border-radius: 10px; margin-bottom: 25px; gap: 5px; }
-        .tab-btn { flex: 1; padding: 12px; border: none; background: none; color: var(--text-muted); cursor: pointer; border-radius: 8px; font-weight: 600; transition: 0.3s; font-size: 14px;}
-        .tab-btn.active { background: var(--accent); color: white; box-shadow: 0 4px 12px rgba(25, 195, 176, 0.3); }
+        .tabs { display: flex; gap: 5px; margin-bottom: 20px; background: #080c14; padding: 5px; border-radius: 10px; }
+        .tab-btn { 
+            flex: 1; padding: 12px; border: none; background: none; 
+            color: var(--text-muted); cursor: pointer; border-radius: 8px; 
+            font-weight: 600; font-size: 13px; transition: 0.3s;
+        }
+        .tab-btn.active { background: var(--accent); color: white; }
 
-        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section { display: none; animation: fadeIn 0.3s ease-in; }
         .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* FORMS */
-        .form-group { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid var(--accent-gold); }
+        /* FORM */
+        .form-group { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); }
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-        label { display: block; margin-bottom: 8px; font-size: 13px; color: var(--text-muted); }
-        input, select { width: 100%; padding: 12px; background: #0f192a; border: 1px solid var(--border); border-radius: 8px; color: white; box-sizing: border-box; }
-        input:focus { border-color: var(--accent); outline: none; }
-        .main-btn { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        .main-btn:hover { background: var(--accent-hover); }
-
-        /* TABLES */
-        .table-container { background: var(--card); border-radius: 15px; border: 1px solid var(--accent-gold); overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th { background: rgba(255,255,255,0.03); padding: 15px; text-align: left; font-size: 12px; color: var(--text-muted); }
-        td { padding: 15px; border-bottom: 1px solid var(--border); font-size: 14px; }
-        .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; }
-        .bg-red { background: rgba(239, 68, 68, 0.1); color: var(--red); }
-        .bg-green { background: rgba(34, 197, 94, 0.1); color: var(--green); }
-        
-        .loading-overlay { display: none; text-align: center; color: var(--accent); font-size: 14px; margin-top: 10px; }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <div class="header">
-        <div class="logo-area">
-            <img src="logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3141/3141158.png'" class="logo-img">
-            <div class="brand-name">
-                <span style="color:var(--text-main);">Usmonov's</span>
-                <span>CRM</span>
-                <span class="brand-name-gold">🕌 Professional System</span>
-            </div>
-        </div>
-        <div id="sync-status" style="font-size: 12px; color: var(--green);">● Online</div>
-    </div>
-
-    <div class="grid">
-        <div class="stat-card"><span class="stat-icon stat-icon-gold">🌙</span><div><h5>Jami Tushum</h5><p id="t-total">0</p></div></div>
-        <div class="stat-card"><span class="stat-icon">👤</span><div><h5>O'quvchilar</h5><p id="t-count">0</p></div></div>
-        <div class="stat-card stat-card-gold" style="--accent: var(--red)"><span class="stat-icon stat-icon-gold">🕌</span><div><h5>Umumiy Qarz</h5><p id="t-debt">0</p></div></div>
-    </div>
-
-    <div class="tabs">
-        <button class="tab-btn active" onclick="showTab(event, 'add')">TO'LOV QABUL QILISH</button>
-        <button class="tab-btn" onclick="showTab(event, 'history')">TO'LOVLAR TARIXI</button>
-        <button class="tab-btn" onclick="showTab(event, 'stats')">STATISTIKA</button>
-    </div>
-
-    <div id="add" class="section active">
-        <div class="form-group">
-            <div class="input-row">
-                <div><label>O'quvchi ismi</label><input type="text" id="name" placeholder="Ism familiya..."></div>
-                <div><label>To'lov turi</label>
-                    <select id="type"><option value="Naqd">Naqd pul</option><option value="Plastik">Plastik karta</option></select>
-                </div>
-            </div>
-            <div class="input-row">
-                <div><label>Kurs narxi (so'm)</label><input type="number" id="price" placeholder="500000"></div>
-                <div><label>To'langan summa (so'm)</label><input type="number" id="paid" placeholder="300000"></div>
-            </div>
-            <button class="main-btn" id="save-btn" onclick="saveData()">TASDIQLASH VA SAQLASH</button>
-            <div id="loader" class="loading-overlay">Bulutga yuborilmoqda, kuting...</div>
-        </div>
-    </div>
-
-    <div id="history" class="section">
-        <div class="table-container">
-            <table>
-                <thead><tr><th>Sana</th><th>O'quvchi</th><th>Summa</th><th>Tur</th><th>Amal</th></tr></thead>
-                <tbody id="history-list"></tbody>
-            </table>
-        </div>
-    </div>
-
-    <div id="stats" class="section">
-        <div class="table-container">
-            <table>
-                <thead><tr><th>O'quvchi</th><th>Jami To'lov</th><th>Qolgan Qarz</th><th>Holat</th></tr></thead>
-                <tbody id="stats-list"></tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<script>
-    // GOOGLE CLOUD URL
-    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbzUk_s4ay3W5eQzAthBdnAbE36WCa3rUXJN0WLfyrakHxGBBFoKAx-0gPUGqnKVotLsdA/exec";
-    
-    // MA'LUMOTLARNI YUKLASH
-    let data = JSON.parse(localStorage.getItem('usmonovs_vpro_data_islamic') || '[]');
-
-    function showTab(e, id) {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        e.currentTarget.classList.add('active');
-        render();
-    }
-
-    async function saveData() {
-        const name = document.getElementById('name').value;
-        const price = parseInt(document.getElementById('price').value) || 0;
-        const paid = parseInt(document.getElementById('paid').value) || 0;
-        const type = document.getElementById('type').value;
-        const date = new Date().toLocaleDateString('uz-UZ');
-        const btn = document.getElementById('save-btn');
-        const loader = document.getElementById('loader');
-
-        if(!name || price <= 0) return alert("Iltimos, ma'lumotlarni to'liq kiriting!");
-
-        const newItem = { date, name, price, paid, debt: price - paid, type };
-        
-        btn.disabled = true;
-        loader.style.display = "block";
-
-        try {
-            // 1. Google Sheetsga yuborish
-            await fetch(GOOGLE_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newItem) });
-            
-            // 2. Local xotiraga saqlash
-            data.unshift(newItem);
-            localStorage.setItem('usmonovs_vpro_data_islamic', JSON.stringify(data));
-            
-            // Tozalash
-            document.getElementById('name').value = '';
-            document.getElementById('price').value = '';
-            document.getElementById('paid').value = '';
-            
-            alert("Muvaffaqiyatli saqlandi!");
-            render();
-        } catch (err) {
-            alert("Xatolik! Internetni tekshiring.");
-        } finally {
-            btn.disabled = false;
-            loader.style.display = "none";
+        label { display: block; margin-bottom: 5px; font-size: 12px; color: var(--accent-gold); }
+        input, select { 
+            width: 100%; padding: 12px; background: #0b111d; 
+            border: 1px solid var(--border); border-radius: 8px; 
+            color: white; box-sizing: border-box; outline: none;
         }
-    }
-
-    function render() {
-        let hList = '', sList = '', tPaid = 0, tDebt = 0;
-        let stObj = {};
-
-        data.forEach((item, i) => {
-            tPaid += item.paid;
-            tDebt += item.debt;
-            hList += `<tr><td>${item.date}</td><td><b>${item.name}</b></td><td style="color:var(--accent)">${item.paid.toLocaleString()}</td><td><small>${item.type}</small></td><td><button onclick="del(${i})" style="color:var(--red); background:none; border:none; cursor:pointer;">O'chirish</button></td></tr>`;
-
-            if(!stObj[item.name]) stObj[item.name] = { paid: 0, debt: 0 };
-            stObj[item.name].paid += item.paid;
-            stObj[item.name].debt += item.debt;
-        });
-
-        for(let n in stObj) {
-            let s = stObj[n];
-            sList += `<tr><td><b>${n}</b></td><td>${s.paid.toLocaleString()}</td><td style="color:${s.debt > 0 ? 'var(--red)' : 'var(--accent)'}">${s.debt.toLocaleString()}</td><td><span class="badge ${s.debt > 0 ? 'bg-red' : 'bg-green'}">${s.debt > 0 ? 'Qarz bor' : 'To\'liq'}</span></td></tr>`;
+        input:focus { border-color: var(--accent); }
+        .main-btn { 
+            width: 100%; padding: 15px; background: var(--accent); 
+            color: white; border: none; border-radius: 10px; 
+            font-weight: bold; cursor: pointer; transition: 0.3s;
         }
+        .main-btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
 
-        document.getElementById('history-list').innerHTML = hList;
-        document.getElementById('stats-list').innerHTML = sList;
-        document.getElementById('t-total').innerText = tPaid.toLocaleString() + " so'm";
-        document.getElementById('t-count').innerText = Object.keys(stObj).length + " ta";
-        document.getElementById('t-debt').innerText = tDebt.toLocaleString() + " so'm";
-    }
-
-    function del(i) {
-        if(confirm("Ushbu to'lovni o'chirmoqchimisiz?")) {
-            data.splice(i, 1);
-            localStorage.setItem('usmonovs_vpro_data_islamic', JSON.stringify(data));
-            render();
-        }
-    }
-
-    render();
-</script>
-</body>
-</html>
+        /*
